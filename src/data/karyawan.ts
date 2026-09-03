@@ -1,0 +1,58 @@
+import type { Karyawan } from '../types/karyawan'
+
+export const dataKaryawanAwal: Karyawan[] = [
+  {
+    id: 'KRY-001',
+    nama: 'Andi Saputra',
+    email: 'andi.saputra@perusahaan.id',
+    nomorWhatsApp: '081111111111',
+    departemen: 'Keuangan',
+    jabatan: 'Staf Keuangan',
+    status: 'Aktif',
+  },
+  {
+    id: 'KRY-002',
+    nama: 'Siti Rahma',
+    email: 'siti.rahma@perusahaan.id',
+    nomorWhatsApp: '082222222222',
+    departemen: 'SDM',
+    jabatan: 'Staf SDM',
+    status: 'Aktif',
+  },
+  {
+    id: 'KRY-003',
+    nama: 'Fajar Ramadhan',
+    email: 'fajar.ramadhan@perusahaan.id',
+    nomorWhatsApp: '083333333333',
+    departemen: 'Pemasaran',
+    jabatan: 'Marketing Officer',
+    status: 'Aktif',
+  },
+  {
+    id: 'KRY-004',
+    nama: 'Dewi Anggraini',
+    email: 'dewi.anggraini@perusahaan.id',
+    nomorWhatsApp: '084444444444',
+    departemen: 'Akuntansi',
+    jabatan: 'Staf Akuntansi',
+    status: 'Aktif',
+  },
+  {
+    id: 'KRY-005',
+    nama: 'Muhammad Ilham',
+    email: 'm.ilham@perusahaan.id',
+    nomorWhatsApp: '085555555555',
+    departemen: 'Operasional',
+    jabatan: 'Staf Operasional',
+    status: 'Aktif',
+  },
+  {
+    id: 'KRY-006',
+    nama: 'Nur Aisyah',
+    email: 'nur.aisyah@perusahaan.id',
+    nomorWhatsApp: '086666666666',
+    departemen: 'Administrasi',
+    jabatan: 'Staf Administrasi',
+    status: 'Aktif',
+  },
+]

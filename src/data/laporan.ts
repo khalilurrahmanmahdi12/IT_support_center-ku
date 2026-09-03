@@ -1,0 +1,151 @@
+import type {
+  PrioritasTiket,
+  StatusTiket,
+} from '../types/tiket'
+
+export interface LaporanTiket {
+  id: string
+  tanggal: string
+  tanggalISO: string
+  pelapor: string
+  departemen: string
+  judul: string
+  kategori: string
+  prioritas: PrioritasTiket
+  status: StatusTiket
+  teknisi: string
+  waktuPenyelesaian: string
+}
+
+export const dataLaporanTiket: LaporanTiket[] = [
+  {
+    id: 'TKT-001',
+    tanggal: '03 Sep 2026',
+    tanggalISO: '2026-09-03',
+    pelapor: 'Andi Saputra',
+    departemen: 'Keuangan',
+    judul: 'Tidak dapat masuk ke email perusahaan',
+    kategori: 'Akun & Akses',
+    prioritas: 'Tinggi',
+    status: 'Sedang Diproses',
+    teknisi: 'Rizky Pratama',
+    waktuPenyelesaian: '-',
+  },
+  {
+    id: 'TKT-002',
+    tanggal: '03 Sep 2026',
+    tanggalISO: '2026-09-03',
+    pelapor: 'Siti Rahma',
+    departemen: 'SDM',
+    judul: 'Printer tidak dapat mencetak dokumen',
+    kategori: 'Perangkat Keras',
+    prioritas: 'Sedang',
+    status: 'Terbuka',
+    teknisi: 'Belum ditugaskan',
+    waktuPenyelesaian: '-',
+  },
+  {
+    id: 'TKT-003',
+    tanggal: '03 Sep 2026',
+    tanggalISO: '2026-09-03',
+    pelapor: 'Fajar Ramadhan',
+    departemen: 'Pemasaran',
+    judul: 'Koneksi internet sangat lambat',
+    kategori: 'Jaringan',
+    prioritas: 'Kritis',
+    status: 'Terbuka',
+    teknisi: 'Belum ditugaskan',
+    waktuPenyelesaian: '-',
+  },
+  {
+    id: 'TKT-004',
+    tanggal: '02 Sep 2026',
+    tanggalISO: '2026-09-02',
+    pelapor: 'Dewi Anggraini',
+    departemen: 'Akuntansi',
+    judul: 'Microsoft Excel tertutup sendiri',
+    kategori: 'Perangkat Lunak',
+    prioritas: 'Sedang',
+    status: 'Selesai',
+    teknisi: 'Ardi Nugraha',
+    waktuPenyelesaian: '2 jam 15 menit',
+  },
+  {
+    id: 'TKT-005',
+    tanggal: '02 Sep 2026',
+    tanggalISO: '2026-09-02',
+    pelapor: 'Muhammad Ilham',
+    departemen: 'Operasional',
+    judul: 'Laptop tidak dapat menyala',
+    kategori: 'Perangkat Keras',
+    prioritas: 'Tinggi',
+    status: 'Sedang Diproses',
+    teknisi: 'Rizky Pratama',
+    waktuPenyelesaian: '-',
+  },
+  {
+    id: 'TKT-006',
+    tanggal: '01 Sep 2026',
+    tanggalISO: '2026-09-01',
+    pelapor: 'Nur Aisyah',
+    departemen: 'Administrasi',
+    judul: 'Tidak dapat mengakses folder bersama',
+    kategori: 'Akun & Akses',
+    prioritas: 'Rendah',
+    status: 'Ditutup',
+    teknisi: 'Ardi Nugraha',
+    waktuPenyelesaian: '1 jam 40 menit',
+  },
+  {
+    id: 'TKT-007',
+    tanggal: '31 Agu 2026',
+    tanggalISO: '2026-08-31',
+    pelapor: 'Budi Hartono',
+    departemen: 'Keuangan',
+    judul: 'Monitor kedua tidak terdeteksi',
+    kategori: 'Perangkat Keras',
+    prioritas: 'Rendah',
+    status: 'Ditutup',
+    teknisi: 'Fahmi Akbar',
+    waktuPenyelesaian: '45 menit',
+  },
+  {
+    id: 'TKT-008',
+    tanggal: '30 Agu 2026',
+    tanggalISO: '2026-08-30',
+    pelapor: 'Ayu Lestari',
+    departemen: 'SDM',
+    judul: 'Aplikasi HR tidak dapat dibuka',
+    kategori: 'Perangkat Lunak',
+    prioritas: 'Tinggi',
+    status: 'Selesai',
+    teknisi: 'Dimas Setiawan',
+    waktuPenyelesaian: '3 jam 10 menit',
+  },
+  {
+    id: 'TKT-009',
+    tanggal: '29 Agu 2026',
+    tanggalISO: '2026-08-29',
+    pelapor: 'Rizal Akbar',
+    departemen: 'Operasional',
+    judul: 'Wi-Fi lantai dua tidak terhubung',
+    kategori: 'Jaringan',
+    prioritas: 'Kritis',
+    status: 'Ditutup',
+    teknisi: 'Rizky Pratama',
+    waktuPenyelesaian: '1 jam 20 menit',
+  },
+  {
+    id: 'TKT-010',
+    tanggal: '28 Agu 2026',
+    tanggalISO: '2026-08-28',
+    pelapor: 'Nabila Putri',
+    departemen: 'Pemasaran',
+    judul: 'Tidak dapat reset password akun',
+    kategori: 'Akun & Akses',
+    prioritas: 'Sedang',
+    status: 'Ditutup',
+    teknisi: 'Dimas Setiawan',
+    waktuPenyelesaian: '35 menit',
+  },
+]
