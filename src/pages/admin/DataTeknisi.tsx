@@ -12,7 +12,7 @@ import {
   useState,
 } from 'react'
 
-import { dataTeknisi } from '../../data/teknisi'
+import { dataTeknisi as dataTeknisiAwal } from '../../data/teknisi'
 
 import type { Teknisi } from '../../types/teknisi'
 
@@ -35,8 +35,8 @@ const formAwal = {
 }
 
 export default function DataTeknisi() {
-  const [daftarTeknisi, setDaftarTeknisi] =
-    useState<Teknisi[]>(dataTeknisi)
+  const [dataTeknisi, setDataTeknisi] =
+    useState<Teknisi[]>(dataTeknisiAwal)
 
   const [pencarian, setPencarian] =
     useState('')
@@ -65,12 +65,11 @@ export default function DataTeknisi() {
   ] = useState<Teknisi | null>(null)
 
   const dataTerfilter = useMemo(() => {
-    const keyword =
-      pencarian
-        .trim()
-        .toLowerCase()
+    const keyword = pencarian
+      .trim()
+      .toLowerCase()
 
-    return daftarTeknisi.filter(
+    return dataTeknisi.filter(
       (item) => {
         const cocokPencarian =
           item.id
@@ -97,7 +96,7 @@ export default function DataTeknisi() {
       },
     )
   }, [
-    daftarTeknisi,
+    dataTeknisi,
     pencarian,
     filterStatus,
   ])
@@ -123,7 +122,8 @@ export default function DataTeknisi() {
         teknisi.nomorWhatsApp,
       spesialisasi:
         teknisi.spesialisasi,
-      status: teknisi.status,
+      status:
+        teknisi.status,
       tiketAktif:
         teknisi.tiketAktif,
     })
@@ -142,7 +142,7 @@ export default function DataTeknisi() {
 
   const buatIdTeknisi = () => {
     const nomorTerbesar =
-      daftarTeknisi.reduce(
+      dataTeknisi.reduce(
         (terbesar, item) => {
           const nomor = Number(
             item.id.replace(
@@ -151,9 +151,7 @@ export default function DataTeknisi() {
             ),
           )
 
-          if (
-            Number.isNaN(nomor)
-          ) {
+          if (Number.isNaN(nomor)) {
             return terbesar
           }
 
@@ -199,7 +197,7 @@ export default function DataTeknisi() {
     }
 
     if (
-      !form.spesialisasi
+      form.spesialisasi.trim().length < 3
     ) {
       setError(
         'Spesialisasi wajib dipilih.',
@@ -211,7 +209,7 @@ export default function DataTeknisi() {
       form.tiketAktif < 0
     ) {
       setError(
-        'Jumlah tiket aktif tidak valid.',
+        'Jumlah tiket aktif tidak boleh kurang dari 0.',
       )
       return
     }
@@ -220,7 +218,7 @@ export default function DataTeknisi() {
       modeEdit &&
       idEdit
     ) {
-      setDaftarTeknisi(
+      setDataTeknisi(
         (sebelumnya) =>
           sebelumnya.map(
             (item) =>
@@ -239,7 +237,7 @@ export default function DataTeknisi() {
         ...form,
       }
 
-      setDaftarTeknisi(
+      setDataTeknisi(
         (sebelumnya) => [
           teknisiBaru,
           ...sebelumnya,
@@ -259,13 +257,11 @@ export default function DataTeknisi() {
   }
 
   const konfirmasiHapus = () => {
-    if (
-      !teknisiAkanDihapus
-    ) {
+    if (!teknisiAkanDihapus) {
       return
     }
 
-    setDaftarTeknisi(
+    setDataTeknisi(
       (sebelumnya) =>
         sebelumnya.filter(
           (item) =>
@@ -281,11 +277,11 @@ export default function DataTeknisi() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+      {/* HEADER */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-sm font-medium text-slate-500">
-            Manajemen Tim IT
+            Manajemen Teknisi
           </p>
 
           <h1 className="mt-1 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
@@ -293,22 +289,21 @@ export default function DataTeknisi() {
           </h1>
 
           <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">
-            Kelola data teknisi, spesialisasi,
-            status ketersediaan, dan jumlah tiket aktif.
+            Kelola data teknisi IT, spesialisasi, status, dan beban tiket aktif.
           </p>
         </div>
 
         <button
           type="button"
           onClick={bukaTambah}
-          className="flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 sm:w-auto"
         >
           <Plus size={17} />
           Tambah Teknisi
         </button>
       </div>
 
-      {/* Filter */}
+      {/* FILTER */}
       <div className="rounded-2xl border border-slate-200 bg-white p-4">
         <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
           <div className="relative md:col-span-2">
@@ -364,10 +359,10 @@ export default function DataTeknisi() {
         </div>
       </div>
 
-      {/* Tabel */}
+      {/* TABEL */}
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[1100px]">
+          <table className="w-full min-w-[1050px]">
             <thead>
               <tr className="border-b border-slate-100 bg-slate-50">
                 <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-400">
@@ -432,15 +427,14 @@ export default function DataTeknisi() {
                         </p>
                       </td>
 
-                      <td className="px-6 py-4 text-sm font-medium text-slate-600">
+                      <td className="px-6 py-4 text-sm text-slate-600">
                         {teknisi.spesialisasi}
                       </td>
 
                       <td className="px-6 py-4">
                         <span
                           className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
-                            teknisi.status ===
-                            'Tersedia'
+                            teknisi.status === 'Tersedia'
                               ? 'bg-emerald-50 text-emerald-700'
                               : 'bg-amber-50 text-amber-700'
                           }`}
@@ -450,15 +444,9 @@ export default function DataTeknisi() {
                       </td>
 
                       <td className="px-6 py-4">
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm font-bold text-slate-800">
-                            {teknisi.tiketAktif}
-                          </span>
-
-                          <span className="text-xs text-slate-400">
-                            tiket
-                          </span>
-                        </div>
+                        <span className="inline-flex min-w-8 items-center justify-center rounded-lg bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-700">
+                          {teknisi.tiketAktif}
+                        </span>
                       </td>
 
                       <td className="px-6 py-4">
@@ -500,7 +488,7 @@ export default function DataTeknisi() {
                     className="px-6 py-16 text-center"
                   >
                     <p className="text-sm font-semibold text-slate-600">
-                      Data teknisi tidak ditemukan
+                      Data tidak ditemukan
                     </p>
 
                     <p className="mt-1 text-xs text-slate-400">
@@ -514,19 +502,20 @@ export default function DataTeknisi() {
         </div>
       </div>
 
-      {/* Modal Tambah / Edit */}
+      {/* MODAL TAMBAH / EDIT */}
       {modalTerbuka && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/50 px-4 py-5">
-          <div className="w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl">
-            <div className="flex items-start justify-between border-b border-slate-100 px-6 py-5">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/50 p-3 sm:p-5">
+          <div className="flex max-h-[calc(100dvh-24px)] w-full max-w-2xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl sm:max-h-[calc(100dvh-40px)]">
+            {/* HEADER MODAL */}
+            <div className="flex shrink-0 items-start justify-between border-b border-slate-100 px-4 py-4 sm:px-6 sm:py-5">
               <div>
-                <h2 className="text-xl font-bold text-slate-900">
+                <h2 className="text-lg font-bold text-slate-900 sm:text-xl">
                   {modeEdit
                     ? 'Edit Teknisi'
                     : 'Tambah Teknisi'}
                 </h2>
 
-                <p className="mt-1 text-sm text-slate-500">
+                <p className="mt-1 text-xs text-slate-500 sm:text-sm">
                   {modeEdit
                     ? 'Perbarui informasi teknisi.'
                     : 'Masukkan informasi teknisi baru.'}
@@ -537,24 +526,26 @@ export default function DataTeknisi() {
                 type="button"
                 onClick={tutupModal}
                 aria-label="Tutup"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-slate-500 transition hover:bg-slate-100 hover:text-slate-900 sm:h-9 sm:w-9"
               >
-                <X size={19} />
+                <X size={18} />
               </button>
             </div>
 
-            <div className="p-6">
+            {/* BODY MODAL */}
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-4 sm:p-6">
               {error && (
-                <div className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+                <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-xs font-medium text-red-700 sm:mb-5 sm:text-sm">
                   {error}
                 </div>
               )}
 
-              <div className="grid grid-cols-1 gap-x-5 gap-y-5 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-x-5 gap-y-4 sm:grid-cols-2 sm:gap-y-5">
+                {/* NAMA */}
                 <div className="sm:col-span-2">
                   <label
                     htmlFor="namaTeknisi"
-                    className="mb-2 block text-sm font-semibold text-slate-700"
+                    className="mb-1.5 block text-xs font-semibold text-slate-700 sm:mb-2 sm:text-sm"
                   >
                     Nama Lengkap
                   </label>
@@ -569,17 +560,19 @@ export default function DataTeknisi() {
                         nama:
                           event.target.value,
                       })
+
                       setError('')
                     }}
                     placeholder="Nama teknisi"
-                    className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-900 focus:ring-4 focus:ring-slate-100"
+                    className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-900 focus:ring-4 focus:ring-slate-100 sm:py-3"
                   />
                 </div>
 
+                {/* EMAIL */}
                 <div>
                   <label
                     htmlFor="emailTeknisi"
-                    className="mb-2 block text-sm font-semibold text-slate-700"
+                    className="mb-1.5 block text-xs font-semibold text-slate-700 sm:mb-2 sm:text-sm"
                   >
                     Email
                   </label>
@@ -594,23 +587,25 @@ export default function DataTeknisi() {
                         email:
                           event.target.value,
                       })
+
                       setError('')
                     }}
                     placeholder="nama@perusahaan.id"
-                    className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-900 focus:ring-4 focus:ring-slate-100"
+                    className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-900 focus:ring-4 focus:ring-slate-100 sm:py-3"
                   />
                 </div>
 
+                {/* WHATSAPP */}
                 <div>
                   <label
-                    htmlFor="nomorTeknisi"
-                    className="mb-2 block text-sm font-semibold text-slate-700"
+                    htmlFor="whatsappTeknisi"
+                    className="mb-1.5 block text-xs font-semibold text-slate-700 sm:mb-2 sm:text-sm"
                   >
                     Nomor WhatsApp
                   </label>
 
                   <input
-                    id="nomorTeknisi"
+                    id="whatsappTeknisi"
                     type="tel"
                     inputMode="numeric"
                     value={form.nomorWhatsApp}
@@ -619,27 +614,22 @@ export default function DataTeknisi() {
                         ...form,
                         nomorWhatsApp:
                           event.target.value
-                            .replace(
-                              /\D/g,
-                              '',
-                            )
-                            .slice(
-                              0,
-                              15,
-                            ),
+                            .replace(/\D/g, '')
+                            .slice(0, 15),
                       })
 
                       setError('')
                     }}
                     placeholder="08xxxxxxxxxx"
-                    className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-900 focus:ring-4 focus:ring-slate-100"
+                    className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-900 focus:ring-4 focus:ring-slate-100 sm:py-3"
                   />
                 </div>
 
+                {/* SPESIALISASI */}
                 <div>
                   <label
                     htmlFor="spesialisasiTeknisi"
-                    className="mb-2 block text-sm font-semibold text-slate-700"
+                    className="mb-1.5 block text-xs font-semibold text-slate-700 sm:mb-2 sm:text-sm"
                   >
                     Spesialisasi
                   </label>
@@ -656,7 +646,7 @@ export default function DataTeknisi() {
 
                       setError('')
                     }}
-                    className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-slate-900 focus:ring-4 focus:ring-slate-100"
+                    className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-700 outline-none transition focus:border-slate-900 focus:ring-4 focus:ring-slate-100 sm:py-3"
                   >
                     {spesialisasiList.map(
                       (item) => (
@@ -671,10 +661,11 @@ export default function DataTeknisi() {
                   </select>
                 </div>
 
+                {/* STATUS */}
                 <div>
                   <label
                     htmlFor="statusTeknisi"
-                    className="mb-2 block text-sm font-semibold text-slate-700"
+                    className="mb-1.5 block text-xs font-semibold text-slate-700 sm:mb-2 sm:text-sm"
                   >
                     Status
                   </label>
@@ -693,7 +684,7 @@ export default function DataTeknisi() {
 
                       setError('')
                     }}
-                    className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-slate-900 focus:ring-4 focus:ring-slate-100"
+                    className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-700 outline-none transition focus:border-slate-900 focus:ring-4 focus:ring-slate-100 sm:py-3"
                   >
                     <option value="Tersedia">
                       Tersedia
@@ -705,10 +696,11 @@ export default function DataTeknisi() {
                   </select>
                 </div>
 
+                {/* JUMLAH TIKET AKTIF */}
                 <div className="sm:col-span-2">
                   <label
                     htmlFor="tiketAktifTeknisi"
-                    className="mb-2 block text-sm font-semibold text-slate-700"
+                    className="mb-1.5 block text-xs font-semibold text-slate-700 sm:mb-2 sm:text-sm"
                   >
                     Jumlah Tiket Aktif
                   </label>
@@ -716,8 +708,8 @@ export default function DataTeknisi() {
                   <input
                     id="tiketAktifTeknisi"
                     type="number"
+                    inputMode="numeric"
                     min={0}
-                    max={99}
                     value={form.tiketAktif}
                     onChange={(event) => {
                       const nilai =
@@ -728,9 +720,7 @@ export default function DataTeknisi() {
                       setForm({
                         ...form,
                         tiketAktif:
-                          Number.isNaN(
-                            nilai,
-                          )
+                          Number.isNaN(nilai)
                             ? 0
                             : Math.max(
                                 0,
@@ -740,49 +730,52 @@ export default function DataTeknisi() {
 
                       setError('')
                     }}
-                    className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-slate-900 focus:ring-4 focus:ring-slate-100"
+                    className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-900 outline-none transition focus:border-slate-900 focus:ring-4 focus:ring-slate-100 sm:py-3"
                   />
 
-                  <p className="mt-2 text-xs text-slate-400">
+                  <p className="mt-2 text-xs leading-5 text-slate-400">
                     Jumlah tiket aktif digunakan sebagai data demo beban kerja teknisi.
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-3 border-t border-slate-100 bg-slate-50/50 px-6 py-5">
-              <button
-                type="button"
-                onClick={tutupModal}
-                className="rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 hover:text-slate-900"
-              >
-                Batal
-              </button>
+            {/* FOOTER MODAL */}
+            <div className="shrink-0 border-t border-slate-100 bg-white px-4 py-3.5 sm:px-6 sm:py-5">
+              <div className="flex items-center justify-end gap-2 sm:gap-3">
+                <button
+                  type="button"
+                  onClick={tutupModal}
+                  className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 hover:text-slate-900 sm:px-5"
+                >
+                  Batal
+                </button>
 
-              <button
-                type="button"
-                onClick={handleSimpan}
-                className="rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
-              >
-                {modeEdit
-                  ? 'Simpan Perubahan'
-                  : 'Tambah Teknisi'}
-              </button>
+                <button
+                  type="button"
+                  onClick={handleSimpan}
+                  className="rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800 sm:px-5"
+                >
+                  {modeEdit
+                    ? 'Simpan Perubahan'
+                    : 'Tambah Teknisi'}
+                </button>
+              </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* Modal Hapus */}
+      {/* MODAL HAPUS */}
       {teknisiAkanDihapus && (
-        <div className="fixed inset-0 z-[120] flex items-center justify-center bg-slate-950/50 px-4">
-          <div className="w-full max-w-md overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
-            <div className="p-6">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-red-50 text-red-600">
-                <Trash2 size={22} />
+        <div className="fixed inset-0 z-[120] flex items-center justify-center bg-slate-950/50 p-3 sm:p-5">
+          <div className="flex max-h-[calc(100dvh-24px)] w-full max-w-md flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl sm:max-h-[calc(100dvh-40px)]">
+            <div className="min-h-0 flex-1 overflow-y-auto p-5 sm:p-6">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-red-50 text-red-600 sm:h-12 sm:w-12">
+                <Trash2 size={21} />
               </div>
 
-              <h2 className="mt-5 text-xl font-bold text-slate-900">
+              <h2 className="mt-4 text-lg font-bold text-slate-900 sm:mt-5 sm:text-xl">
                 Hapus Teknisi?
               </h2>
 
@@ -794,7 +787,7 @@ export default function DataTeknisi() {
                 . Tindakan ini tidak dapat dibatalkan.
               </p>
 
-              <div className="mt-5 rounded-xl border border-slate-200 bg-slate-50 p-4">
+              <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4 sm:mt-5">
                 <div className="flex items-center gap-3">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-slate-600 shadow-sm">
                     <UserCog size={18} />
@@ -808,7 +801,7 @@ export default function DataTeknisi() {
                     <p className="mt-1 text-xs text-slate-500">
                       {teknisiAkanDihapus.id}
                       {' • '}
-                      {teknisiAkanDihapus.spesialisasi}
+                      {teknisiAkanDihapus.status}
                     </p>
                   </div>
                 </div>
@@ -819,37 +812,35 @@ export default function DataTeknisi() {
                   </p>
 
                   <p className="mt-1 text-xs text-slate-400">
-                    {teknisiAkanDihapus.nomorWhatsApp}
-                  </p>
-
-                  <p className="mt-2 text-xs font-medium text-slate-500">
-                    {teknisiAkanDihapus.tiketAktif} tiket aktif
+                    {teknisiAkanDihapus.spesialisasi}
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-3 border-t border-slate-100 bg-slate-50/70 px-6 py-4">
-              <button
-                type="button"
-                onClick={() =>
-                  setTeknisiAkanDihapus(
-                    null,
-                  )
-                }
-                className="rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 hover:text-slate-900"
-              >
-                Batal
-              </button>
+            <div className="shrink-0 border-t border-slate-100 bg-white px-4 py-3.5 sm:px-6 sm:py-4">
+              <div className="flex items-center justify-end gap-2 sm:gap-3">
+                <button
+                  type="button"
+                  onClick={() =>
+                    setTeknisiAkanDihapus(
+                      null,
+                    )
+                  }
+                  className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 hover:text-slate-900 sm:px-5"
+                >
+                  Batal
+                </button>
 
-              <button
-                type="button"
-                onClick={konfirmasiHapus}
-                className="flex items-center gap-2 rounded-xl bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700"
-              >
-                <Trash2 size={16} />
-                Hapus Teknisi
-              </button>
+                <button
+                  type="button"
+                  onClick={konfirmasiHapus}
+                  className="flex items-center gap-2 rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700 sm:px-5"
+                >
+                  <Trash2 size={16} />
+                  Hapus Teknisi
+                </button>
+              </div>
             </div>
           </div>
         </div>
