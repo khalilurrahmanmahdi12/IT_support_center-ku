@@ -495,7 +495,3 @@ Jika project ini menarik, jangan lupa kasih ⭐ pada repository.
 
 🔗 *IT Support Center*
 [https://github.com/khalilurrahmanmahdi12/IT_support_center-ku](https://github.com/khalilurrahmanmahdi12/IT_support_center-ku)
-
-````
-
-
