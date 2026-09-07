@@ -15,8 +15,12 @@ Sistem ini membantu proses pelaporan masalah, penugasan teknisi, monitoring prog
 
 🚀 Live Demo
 
-🌐 *Demo:*  
+🌐 *Demo*  
 https://it-support-center.vercel.app/
+
+💻 *Repository** 
+https://github.com/khalilurrahmanmahdi12/IT_support_center-ku
+
 ---
 
 ✨ Fitur Utama
